@@ -2,11 +2,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { User } from '@/types';
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-
-if (!JWT_SECRET) {
-  throw new Error('Please define JWT_SECRET in your environment variables');
-}
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // Password hashing
 export async function hashPassword(password: string): Promise<string> {
@@ -26,6 +22,9 @@ export interface JWTPayload {
 }
 
 export function generateToken(payload: JWTPayload): string {
+  if (!JWT_SECRET) {
+    throw new Error('Please define JWT_SECRET in your environment variables');
+  }
   return jwt.sign(payload, JWT_SECRET, {
     expiresIn: '7d',
     issuer: 'summer-walker-app',
@@ -33,6 +32,9 @@ export function generateToken(payload: JWTPayload): string {
 }
 
 export function verifyToken(token: string): JWTPayload | null {
+  if (!JWT_SECRET) {
+    throw new Error('Please define JWT_SECRET in your environment variables');
+  }
   try {
     const decoded = jwt.verify(token, JWT_SECRET, {
       issuer: 'summer-walker-app',
