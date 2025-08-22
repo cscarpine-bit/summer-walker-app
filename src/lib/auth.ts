@@ -63,7 +63,7 @@ export function canAccessTier(userTier: User['tier'], requiredTier: User['tier']
     vip: 2,
   };
   
-  return tierLevels[userTier || 'free'] >= tierLevels[requiredTier];
+  return tierLevels[userTier || 'free'] >= tierLevels[requiredTier || 'free'];
 }
 
 // Permission checks for specific actions
@@ -107,7 +107,7 @@ export function hasSpecificPermission(
   userRole: User['role'],
   permission: keyof typeof PERMISSIONS
 ): boolean {
-  return PERMISSIONS[permission].includes(userRole);
+  return (PERMISSIONS[permission] as unknown as User['role'][]).includes(userRole);
 }
 
 // Utility function to extract user from token

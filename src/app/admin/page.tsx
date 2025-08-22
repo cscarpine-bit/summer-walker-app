@@ -147,8 +147,6 @@ export default function AdminDashboard() {
                   className={`ml-2 flex items-baseline text-sm font-semibold ${
                     stat.changeType === 'positive'
                       ? 'text-green-400'
-                      : stat.changeType === 'negative'
-                      ? 'text-red-400'
                       : 'text-gray-400'
                   }`}
                 >
